@@ -48,6 +48,28 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Snap
 
+# Display
+TARGET_DISPLAY_ENABLE_DRM ?= false
+
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.allocator@2.0-service \
+    android.hardware.graphics.mapper@2.0-impl-2.1 \
+    gralloc.ashmem \
+    gralloc.default
+
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.composer@2.2-service \
+    hwcomposer.drm
+
+PRODUCT_PACKAGES += \
+    android.hardware.memtrack-service.example
+
+PRODUCT_PACKAGES += \
+    libEGL_swiftshader \
+    libGLESv1_CM_swiftshader \
+    libGLESv2_swiftshader
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)

@@ -15,6 +15,9 @@ BOARD_USES_MAINLINE_HARDWARE := true
 
 # Properties
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
+ifeq ($(TARGET_DISPLAY_ENABLE_DRM),true)
+TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor_drm.prop
+endif
 
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true

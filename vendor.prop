@@ -1,2 +1,8 @@
 # Camera
 ro.hardware.camera=v4l2
+
+# Graphics
+debug.sf.disable_hwc_overlays=1
+debug.sf.no_hw_vsync=1
+ro.hardware.egl=swiftshader
+ro.opengles.version=131072

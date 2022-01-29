@@ -1,0 +1,2 @@
+ro.hardware.gralloc=ashmem
+ro.hardware.hwcomposer=drm
