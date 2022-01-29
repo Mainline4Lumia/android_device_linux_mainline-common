@@ -22,16 +22,18 @@
 #include <set>
 #include <vector>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include "array_vector.h"
 #include "common.h"
 #include "partial_metadata_interface.h"
+
+using CameraMetadata = android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 namespace v4l2_camera_hal {
 
 typedef std::set<std::unique_ptr<PartialMetadataInterface>> PartialMetadataSet;
 
-// Templated helper functions effectively extending android::CameraMetadata.
+// Templated helper functions effectively extending CameraMetadata.
 // Will cause a compile-time errors if CameraMetadata doesn't support
 // using the templated type. Templates are provided to extend this support
 // to std::arrays, std::vectors, and ArrayVectors of supported types as
@@ -40,10 +42,10 @@ typedef std::set<std::unique_ptr<PartialMetadataInterface>> PartialMetadataSet;
 // UpdateMetadata(metadata, tag, data):
 //
 // Updates the entry for |tag| in |metadata| (functionally similar to
-// android::CameraMetadata::update).
+// CameraMetadata::update).
 //
 // Args:
-//   metadata: the android::CameraMetadata to update.
+//   metadata: the CameraMetadata to update.
 //   tag: the tag within |metadata| to update.
 //   data: A reference to the data to update |tag| with.
 //
@@ -58,7 +60,7 @@ typedef std::set<std::unique_ptr<PartialMetadataInterface>> PartialMetadataSet;
 
 // Generic (pointer & size).
 template <typename T>
-static int UpdateMetadata(android::CameraMetadata* metadata,
+static int UpdateMetadata(CameraMetadata* metadata,
                           int32_t tag,
                           const T* data,
                           size_t count) {
@@ -72,7 +74,7 @@ static int UpdateMetadata(android::CameraMetadata* metadata,
 
 // Generic (single item reference).
 template <typename T>
-static int UpdateMetadata(android::CameraMetadata* metadata,
+static int UpdateMetadata(CameraMetadata* metadata,
                           int32_t tag,
                           const T& val) {
   return UpdateMetadata(metadata, tag, &val, 1);
@@ -80,7 +82,7 @@ static int UpdateMetadata(android::CameraMetadata* metadata,
 
 // Specialization for vectors.
 template <typename T>
-static int UpdateMetadata(android::CameraMetadata* metadata,
+static int UpdateMetadata(CameraMetadata* metadata,
                           int32_t tag,
                           const std::vector<T>& val) {
   return UpdateMetadata(metadata, tag, val.data(), val.size());
@@ -88,7 +90,7 @@ static int UpdateMetadata(android::CameraMetadata* metadata,
 
 // Specialization for arrays.
 template <typename T, size_t N>
-static int UpdateMetadata(android::CameraMetadata* metadata,
+static int UpdateMetadata(CameraMetadata* metadata,
                           int32_t tag,
                           const std::array<T, N>& val) {
   return UpdateMetadata(metadata, tag, val.data(), N);
@@ -96,7 +98,7 @@ static int UpdateMetadata(android::CameraMetadata* metadata,
 
 // Specialization for ArrayVectors.
 template <typename T, size_t N>
-static int UpdateMetadata(android::CameraMetadata* metadata,
+static int UpdateMetadata(CameraMetadata* metadata,
                           int32_t tag,
                           const ArrayVector<T, N>& val) {
   return UpdateMetadata(metadata, tag, val.data(), val.total_num_elements());
@@ -104,7 +106,7 @@ static int UpdateMetadata(android::CameraMetadata* metadata,
 
 // Specialization for vectors of arrays.
 template <typename T, size_t N>
-static int UpdateMetadata(android::CameraMetadata* metadata,
+static int UpdateMetadata(CameraMetadata* metadata,
                           int32_t tag,
                           const std::vector<std::array<T, N>>& val) {
   // Convert to array vector so we know all the elements are contiguous.
@@ -175,7 +177,7 @@ inline void GetDataPointer<camera_metadata_rational_t>(camera_metadata_ro_entry_
 
 // Singleton.
 template <typename T>
-static int SingleTagValue(const android::CameraMetadata& metadata,
+static int SingleTagValue(const CameraMetadata& metadata,
                           int32_t tag,
                           T* val) {
   if (!val) {
@@ -206,7 +208,7 @@ static int SingleTagValue(const android::CameraMetadata& metadata,
 
 // Specialization for std::array.
 template <typename T, size_t N>
-static int SingleTagValue(const android::CameraMetadata& metadata,
+static int SingleTagValue(const CameraMetadata& metadata,
                           int32_t tag,
                           std::array<T, N>* val) {
   if (!val) {
@@ -255,7 +257,7 @@ static int SingleTagValue(const android::CameraMetadata& metadata,
 //   -ENODEV: The tag claims to be non-empty, but the data pointer is null.
 //   0: Success. |*val| will contain the values for |tag|.
 template <typename T>
-static int VectorTagValue(const android::CameraMetadata& metadata,
+static int VectorTagValue(const CameraMetadata& metadata,
                           int32_t tag,
                           std::vector<T>* val) {
   if (!val) {
@@ -279,7 +281,7 @@ static int VectorTagValue(const android::CameraMetadata& metadata,
 
 // Specialization for std::array.
 template <typename T, size_t N>
-static int VectorTagValue(const android::CameraMetadata& metadata,
+static int VectorTagValue(const CameraMetadata& metadata,
                           int32_t tag,
                           std::vector<std::array<T, N>>* val) {
   if (!val) {

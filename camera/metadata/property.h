@@ -35,27 +35,27 @@ class Property : public PartialMetadataInterface {
   virtual std::vector<int32_t> DynamicTags() const override { return {}; };
 
   virtual int PopulateStaticFields(
-      android::CameraMetadata* metadata) const override {
+      CameraMetadata* metadata) const override {
     return UpdateMetadata(metadata, tag_, value_);
   };
 
   virtual int PopulateDynamicFields(
-      android::CameraMetadata* /*metadata*/) const override {
+      CameraMetadata* /*metadata*/) const override {
     return 0;
   };
 
   virtual int PopulateTemplateRequest(
-      int /*template_type*/, android::CameraMetadata* /*metadata*/) const override {
+      int /*template_type*/, CameraMetadata* /*metadata*/) const override {
     return 0;
   };
 
   virtual bool SupportsRequestValues(
-      const android::CameraMetadata& /*metadata*/) const override {
+      const CameraMetadata& /*metadata*/) const override {
     return true;
   };
 
   virtual int SetRequestValues(
-      const android::CameraMetadata& /*metadata*/) override {
+      const CameraMetadata& /*metadata*/) override {
     return 0;
   };
 

@@ -36,15 +36,15 @@ class State : public PartialMetadataInterface {
   virtual std::vector<int32_t> DynamicTags() const override { return {tag_}; };
 
   virtual int PopulateStaticFields(
-      android::CameraMetadata* metadata) const override;
+      CameraMetadata* metadata) const override;
   virtual int PopulateDynamicFields(
-      android::CameraMetadata* metadata) const override;
+      CameraMetadata* metadata) const override;
   virtual int PopulateTemplateRequest(
-      int template_type, android::CameraMetadata* metadata) const override;
+      int template_type, CameraMetadata* metadata) const override;
   virtual bool SupportsRequestValues(
-      const android::CameraMetadata& metadata) const override;
+      const CameraMetadata& metadata) const override;
   virtual int SetRequestValues(
-      const android::CameraMetadata& metadata) override;
+      const CameraMetadata& metadata) override;
 
  private:
   int32_t tag_;
@@ -54,13 +54,13 @@ class State : public PartialMetadataInterface {
 // -----------------------------------------------------------------------------
 
 template <typename T>
-int State<T>::PopulateStaticFields(android::CameraMetadata* /*metadata*/) const {
+int State<T>::PopulateStaticFields(CameraMetadata* /*metadata*/) const {
   HAL_LOG_ENTER();
   return 0;
 }
 
 template <typename T>
-int State<T>::PopulateDynamicFields(android::CameraMetadata* metadata) const {
+int State<T>::PopulateDynamicFields(CameraMetadata* metadata) const {
   HAL_LOG_ENTER();
 
   T value;
@@ -73,20 +73,20 @@ int State<T>::PopulateDynamicFields(android::CameraMetadata* metadata) const {
 
 template <typename T>
 int State<T>::PopulateTemplateRequest(int /*template_type*/,
-                                      android::CameraMetadata* /*metadata*/) const {
+                                      CameraMetadata* /*metadata*/) const {
   HAL_LOG_ENTER();
   return 0;
 };
 
 template <typename T>
 bool State<T>::SupportsRequestValues(
-    const android::CameraMetadata& /*metadata*/) const {
+    const CameraMetadata& /*metadata*/) const {
   HAL_LOG_ENTER();
   return true;
 };
 
 template <typename T>
-int State<T>::SetRequestValues(const android::CameraMetadata& /*metadata*/) {
+int State<T>::SetRequestValues(const CameraMetadata& /*metadata*/) {
   HAL_LOG_ENTER();
   return 0;
 };

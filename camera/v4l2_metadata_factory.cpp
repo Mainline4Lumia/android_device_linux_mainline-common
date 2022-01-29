@@ -19,7 +19,7 @@
 
 #include "v4l2_metadata_factory.h"
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include "common.h"
 #include "format_metadata_factory.h"
 #include "metadata/boottime_state_delegate.h"
@@ -28,6 +28,8 @@
 #include "metadata/partial_metadata_factory.h"
 #include "metadata/property.h"
 #include "metadata/scaling_converter.h"
+
+using CameraMetadata = android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 namespace v4l2_camera_hal {
 

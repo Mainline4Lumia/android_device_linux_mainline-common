@@ -33,7 +33,6 @@ cc_library_shared {
     shared_libs: [
         "libbase",
         "libchrome",
-        "libcamera_client",
         "libcamera_metadata",
         "libcutils",
         "libexif",
@@ -43,6 +42,9 @@ cc_library_shared {
         "libsync",
         "libutils",
         "libyuv",
+    ],
+    static_libs: [
+        "android.hardware.camera.common@1.0-helper",
     ],
     cppflags: [
         "-fno-short-enums",

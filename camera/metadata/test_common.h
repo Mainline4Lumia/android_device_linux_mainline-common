@@ -20,17 +20,19 @@
 #include <array>
 #include <vector>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gtest/gtest.h>
 #include "array_vector.h"
 #include "metadata_common.h"
+
+using CameraMetadata = android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 namespace v4l2_camera_hal {
 
 // Check that metadata of a given tag matches expectations.
 // Generic.
 template <typename T>
-static void ExpectMetadataEq(const android::CameraMetadata& metadata,
+static void ExpectMetadataEq(const CameraMetadata& metadata,
                              int32_t tag,
                              const T* expected,
                              size_t size) {
@@ -46,7 +48,7 @@ static void ExpectMetadataEq(const android::CameraMetadata& metadata,
 
 // Single item.
 template <typename T>
-static void ExpectMetadataEq(const android::CameraMetadata& metadata,
+static void ExpectMetadataEq(const CameraMetadata& metadata,
                              int32_t tag,
                              T expected) {
   ExpectMetadataEq(metadata, tag, &expected, 1);
@@ -54,7 +56,7 @@ static void ExpectMetadataEq(const android::CameraMetadata& metadata,
 
 // Vector of items.
 template <typename T>
-static void ExpectMetadataEq(const android::CameraMetadata& metadata,
+static void ExpectMetadataEq(const CameraMetadata& metadata,
                              int32_t tag,
                              const std::vector<T>& expected) {
   ExpectMetadataEq(metadata, tag, expected.data(), expected.size());
@@ -62,7 +64,7 @@ static void ExpectMetadataEq(const android::CameraMetadata& metadata,
 
 // Array of items.
 template <typename T, size_t N>
-static void ExpectMetadataEq(const android::CameraMetadata& metadata,
+static void ExpectMetadataEq(const CameraMetadata& metadata,
                              int32_t tag,
                              const std::array<T, N>& expected) {
   ExpectMetadataEq(metadata, tag, expected.data(), N);
@@ -70,7 +72,7 @@ static void ExpectMetadataEq(const android::CameraMetadata& metadata,
 
 // ArrayVector.
 template <typename T, size_t N>
-static void ExpectMetadataEq(const android::CameraMetadata& metadata,
+static void ExpectMetadataEq(const CameraMetadata& metadata,
                              int32_t tag,
                              const ArrayVector<T, N>& expected) {
   ExpectMetadataEq(
@@ -79,7 +81,7 @@ static void ExpectMetadataEq(const android::CameraMetadata& metadata,
 
 // Vector of arrays.
 template <typename T, size_t N>
-static void ExpectMetadataEq(const android::CameraMetadata& metadata,
+static void ExpectMetadataEq(const CameraMetadata& metadata,
                              int32_t tag,
                              const std::vector<std::array<T, N>>& expected) {
   // Convert to array vector so we know all the elements are contiguous.

@@ -115,8 +115,8 @@ int Camera::loadStaticInfo() {
     return 0;
   }
 
-  std::unique_ptr<android::CameraMetadata> static_metadata =
-      std::make_unique<android::CameraMetadata>();
+  std::unique_ptr<CameraMetadata> static_metadata =
+      std::make_unique<CameraMetadata>();
   int res = initStaticInfo(static_metadata.get());
   if (res) {
     ALOGE("%s:%d: Failed to get static info from device.",
@@ -277,8 +277,8 @@ const camera_metadata_t* Camera::constructDefaultRequestSettings(int type)
         }
 
         // Initialize this template if it hasn't been initialized yet.
-        std::unique_ptr<android::CameraMetadata> new_template =
-            std::make_unique<android::CameraMetadata>();
+        std::unique_ptr<CameraMetadata> new_template =
+            std::make_unique<CameraMetadata>();
         int res = initTemplate(type, new_template.get());
         if (res || !new_template) {
             ALOGE("%s:%d: Failed to generate template of type: %d",

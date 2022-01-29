@@ -34,7 +34,7 @@ Metadata::~Metadata() {
   HAL_LOG_ENTER();
 }
 
-int Metadata::FillStaticMetadata(android::CameraMetadata* metadata) {
+int Metadata::FillStaticMetadata(CameraMetadata* metadata) {
   HAL_LOG_ENTER();
   if (!metadata) {
     HAL_LOGE("Can't fill null metadata.");
@@ -48,7 +48,7 @@ int Metadata::FillStaticMetadata(android::CameraMetadata* metadata) {
 
   for (auto& component : components_) {
     // Prevent components from potentially overriding others.
-    android::CameraMetadata additional_metadata;
+    CameraMetadata additional_metadata;
     // Populate the fields.
     res = component->PopulateStaticFields(&additional_metadata);
     if (res) {
@@ -106,7 +106,7 @@ int Metadata::FillStaticMetadata(android::CameraMetadata* metadata) {
   return 0;
 }
 
-bool Metadata::IsValidRequest(const android::CameraMetadata& metadata) {
+bool Metadata::IsValidRequest(const CameraMetadata& metadata) {
   HAL_LOG_ENTER();
 
   // Empty means "use previous settings", which are inherently valid.
@@ -126,7 +126,7 @@ bool Metadata::IsValidRequest(const android::CameraMetadata& metadata) {
 }
 
 int Metadata::GetRequestTemplate(int template_type,
-                                 android::CameraMetadata* template_metadata) {
+                                 CameraMetadata* template_metadata) {
   HAL_LOG_ENTER();
   if (!template_metadata) {
     HAL_LOGE("Can't fill null template.");
@@ -141,7 +141,7 @@ int Metadata::GetRequestTemplate(int template_type,
 
   for (auto& component : components_) {
     // Prevent components from potentially overriding others.
-    android::CameraMetadata additional_metadata;
+    CameraMetadata additional_metadata;
     int res =
         component->PopulateTemplateRequest(template_type, &additional_metadata);
     if (res) {
@@ -162,7 +162,7 @@ int Metadata::GetRequestTemplate(int template_type,
   return 0;
 }
 
-int Metadata::SetRequestSettings(const android::CameraMetadata& metadata) {
+int Metadata::SetRequestSettings(const CameraMetadata& metadata) {
   HAL_LOG_ENTER();
 
   // Empty means "use previous settings".
@@ -180,7 +180,7 @@ int Metadata::SetRequestSettings(const android::CameraMetadata& metadata) {
   return 0;
 }
 
-int Metadata::FillResultMetadata(android::CameraMetadata* metadata) {
+int Metadata::FillResultMetadata(CameraMetadata* metadata) {
   HAL_LOG_ENTER();
   if (!metadata) {
     HAL_LOGE("Can't fill null metadata.");
@@ -189,7 +189,7 @@ int Metadata::FillResultMetadata(android::CameraMetadata* metadata) {
 
   for (auto& component : components_) {
     // Prevent components from potentially overriding others.
-    android::CameraMetadata additional_metadata;
+    CameraMetadata additional_metadata;
     int res = component->PopulateDynamicFields(&additional_metadata);
     if (res) {
       HAL_LOGE("Failed to get all dynamic result fields.");
