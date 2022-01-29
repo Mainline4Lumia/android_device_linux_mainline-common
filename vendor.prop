@@ -6,3 +6,7 @@ debug.sf.disable_hwc_overlays=1
 debug.sf.no_hw_vsync=1
 ro.hardware.egl=swiftshader
 ro.opengles.version=131072
+
+# Wi-Fi
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15
