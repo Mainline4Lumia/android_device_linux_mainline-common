@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include "arc/image_processor.h"
 
 namespace arc {
@@ -52,7 +52,7 @@ class CachedFrame {
   // If |video_hack| is true, it outputs YU12 when |hal_pixel_format| is YV12
   // (swapping U/V planes). Caller should fill |fourcc|, |data|, and
   // Return non-zero error code on failure; return 0 on success.
-  int Convert(const android::CameraMetadata& metadata, FrameBuffer* out_frame,
+  int Convert(const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata, FrameBuffer* out_frame,
               bool video_hack = false);
 
  private:

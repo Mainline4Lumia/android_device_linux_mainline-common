@@ -19,7 +19,7 @@
 
 #include <vector>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 
 namespace v4l2_camera_hal {
 
@@ -36,26 +36,26 @@ class PartialMetadataInterface {
 
   // Add all the static properties this partial metadata
   // is responsible for to |metadata|.
-  virtual int PopulateStaticFields(android::CameraMetadata* metadata) const = 0;
+  virtual int PopulateStaticFields(android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const = 0;
   // Add all the dynamic states this partial metadata
   // is responsible for to |metadata|.
   virtual int PopulateDynamicFields(
-      android::CameraMetadata* metadata) const = 0;
+      android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const = 0;
   // Add default request values for a given template type for all the controls
   // this partial metadata owns.
   virtual int PopulateTemplateRequest(
-      int template_type, android::CameraMetadata* metadata) const = 0;
+      int template_type, android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const = 0;
   // Check if the requested control values from |metadata| (for controls
   // this partial metadata owns) are supported. Empty/null values for owned
   // control tags indicate no change, and are thus inherently supported.
   // If |metadata| is empty all controls are implicitly supported.
   virtual bool SupportsRequestValues(
-      const android::CameraMetadata& metadata) const = 0;
+      const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata) const = 0;
   // Set all the controls this partial metadata
   // is responsible for from |metadata|. Empty/null values for owned control
   // tags indicate no change. If |metadata| is empty no controls should
   // be changed.
-  virtual int SetRequestValues(const android::CameraMetadata& metadata) = 0;
+  virtual int SetRequestValues(const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata) = 0;
 };
 
 }  // namespace v4l2_camera_hal

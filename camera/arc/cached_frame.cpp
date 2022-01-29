@@ -12,7 +12,7 @@
 
 namespace arc {
 
-using android::CameraMetadata;
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 CachedFrame::CachedFrame()
     : source_frame_(nullptr),

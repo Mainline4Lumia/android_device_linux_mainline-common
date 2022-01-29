@@ -6,7 +6,7 @@
 #ifndef HAL_USB_IMAGE_PROCESSOR_H_
 #define HAL_USB_IMAGE_PROCESSOR_H_
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 // FourCC pixel formats (defined as V4L2_PIX_FMT_*).
 #include <linux/videodev2.h>
 // Declarations of HAL_PIXEL_FORMAT_XXX.
@@ -31,7 +31,7 @@ struct ImageProcessor {
   // fill |data|, |buffer_size|, |width|, and |height| of |out_frame|. The
   // function will fill |out_frame->data_size|. Return non-zero error code on
   // failure; return 0 on success.
-  static int ConvertFormat(const android::CameraMetadata& metadata,
+  static int ConvertFormat(const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata,
                            const FrameBuffer& in_frame, FrameBuffer* out_frame);
 
   // Scale image size according to |in_frame| and |out_frame|. Only support

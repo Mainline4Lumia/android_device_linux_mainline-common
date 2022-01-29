@@ -18,7 +18,7 @@
 #define V4L2_CAMERA_HAL_METADATA_H_
 
 #include <android-base/macros.h>
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 
 #include "metadata_common.h"
 
@@ -28,12 +28,12 @@ class Metadata {
   Metadata(PartialMetadataSet components);
   virtual ~Metadata();
 
-  int FillStaticMetadata(android::CameraMetadata* metadata);
-  bool IsValidRequest(const android::CameraMetadata& metadata);
+  int FillStaticMetadata(android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata);
+  bool IsValidRequest(const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata);
   int GetRequestTemplate(int template_type,
-                         android::CameraMetadata* template_metadata);
-  int SetRequestSettings(const android::CameraMetadata& metadata);
-  int FillResultMetadata(android::CameraMetadata* metadata);
+                         android::hardware::camera::common::V1_0::helper::CameraMetadata* template_metadata);
+  int SetRequestSettings(const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata);
+  int FillResultMetadata(android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata);
 
  private:
   // The overall metadata is broken down into several distinct pieces.

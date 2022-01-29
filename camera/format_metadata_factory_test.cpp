@@ -16,12 +16,14 @@
 
 #include "format_metadata_factory.h"
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "metadata/test_common.h"
 #include "v4l2_wrapper_mock.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::AtLeast;
 using testing::Expectation;
@@ -36,7 +38,7 @@ class FormatMetadataFactoryTest : public Test {
  protected:
   virtual void SetUp() { mock_device_.reset(new V4L2WrapperMock()); }
 
-  virtual void ExpectMetadataTagCount(const android::CameraMetadata& metadata,
+  virtual void ExpectMetadataTagCount(const CameraMetadata& metadata,
                                       uint32_t tag,
                                       size_t count) {
     camera_metadata_ro_entry_t entry = metadata.find(tag);
@@ -100,7 +102,7 @@ TEST_F(FormatMetadataFactoryTest, GetFormatMetadata) {
             0);
 
   for (auto& component : components) {
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     component->PopulateStaticFields(&metadata);
     ASSERT_EQ(metadata.entryCount(), 1u);
     int32_t tag = component->StaticTags()[0];
@@ -166,7 +168,7 @@ TEST_F(FormatMetadataFactoryTest, GetFormatMetadataMissingRequired) {
 
   std::vector<std::array<int32_t, 2>> target_fps_ranges{{{5, 10}}, {{10, 10}}};
   for (auto& component : components) {
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     component->PopulateStaticFields(&metadata);
     ASSERT_EQ(metadata.entryCount(), 1u);
     int32_t tag = component->StaticTags()[0];

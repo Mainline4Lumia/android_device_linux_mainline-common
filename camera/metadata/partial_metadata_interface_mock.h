@@ -31,13 +31,13 @@ class PartialMetadataInterfaceMock : public PartialMetadataInterface {
   MOCK_CONST_METHOD0(StaticTags, std::vector<int32_t>());
   MOCK_CONST_METHOD0(ControlTags, std::vector<int32_t>());
   MOCK_CONST_METHOD0(DynamicTags, std::vector<int32_t>());
-  MOCK_CONST_METHOD1(PopulateStaticFields, int(android::CameraMetadata*));
-  MOCK_CONST_METHOD1(PopulateDynamicFields, int(android::CameraMetadata*));
+  MOCK_CONST_METHOD1(PopulateStaticFields, int(android::hardware::camera::common::V1_0::helper::CameraMetadata*));
+  MOCK_CONST_METHOD1(PopulateDynamicFields, int(android::hardware::camera::common::V1_0::helper::CameraMetadata*));
   MOCK_CONST_METHOD2(PopulateTemplateRequest,
-                     int(int, android::CameraMetadata*));
+                     int(int, android::hardware::camera::common::V1_0::helper::CameraMetadata*));
   MOCK_CONST_METHOD1(SupportsRequestValues,
-                     bool(const android::CameraMetadata&));
-  MOCK_METHOD1(SetRequestValues, int(const android::CameraMetadata&));
+                     bool(const android::hardware::camera::common::V1_0::helper::CameraMetadata&));
+  MOCK_METHOD1(SetRequestValues, int(const android::hardware::camera::common::V1_0::helper::CameraMetadata&));
 };
 
 }  // namespace v4l2_camera_hal
