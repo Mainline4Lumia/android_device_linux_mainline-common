@@ -48,9 +48,6 @@ static int gralloc_alloc_buffer(alloc_device_t* dev,
 
 /*****************************************************************************/
 
-int fb_device_open(const hw_module_t* module, const char* name,
-        hw_device_t** device);
-
 static int gralloc_device_open(const hw_module_t* module, const char* name,
         hw_device_t** device);
 
@@ -99,70 +96,6 @@ struct private_module_t HAL_MODULE_INFO_SYM = {
 };
 
 /*****************************************************************************/
-
-static int gralloc_alloc_framebuffer_locked(alloc_device_t* dev,
-        size_t size, int format, int usage, buffer_handle_t* pHandle)
-{
-    private_module_t* m = reinterpret_cast<private_module_t*>(
-            dev->common.module);
-
-    // allocate the framebuffer
-    if (m->framebuffer == NULL) {
-        // initialize the framebuffer, the framebuffer is mapped once
-        // and forever.
-        int err = mapFrameBufferLocked(m, format);
-        if (err < 0) {
-            return err;
-        }
-    }
-
-    const uint32_t bufferMask = m->bufferMask;
-    const uint32_t numBuffers = m->numBuffers;
-    const size_t bufferSize = m->finfo.line_length * m->info.yres;
-    if (numBuffers == 1) {
-        // If we have only one buffer, we never use page-flipping. Instead,
-        // we return a regular buffer which will be memcpy'ed to the main
-        // screen when post is called.
-        int newUsage = (usage & ~GRALLOC_USAGE_HW_FB) | GRALLOC_USAGE_HW_2D;
-        return gralloc_alloc_buffer(dev, bufferSize, newUsage, pHandle);
-    }
-
-    if (bufferMask >= ((1LU<<numBuffers)-1)) {
-        // We ran out of buffers.
-        return -ENOMEM;
-    }
-
-    // create a "fake" handles for it
-    intptr_t vaddr = intptr_t(m->framebuffer->base);
-    private_handle_t* hnd = new private_handle_t(dup(m->framebuffer->fd), size,
-            private_handle_t::PRIV_FLAGS_FRAMEBUFFER);
-
-    // find a free slot
-    for (uint32_t i=0 ; i<numBuffers ; i++) {
-        if ((bufferMask & (1LU<<i)) == 0) {
-            m->bufferMask |= (1LU<<i);
-            break;
-        }
-        vaddr += bufferSize;
-    }
-    
-    hnd->base = vaddr;
-    hnd->offset = vaddr - intptr_t(m->framebuffer->base);
-    *pHandle = hnd;
-
-    return 0;
-}
-
-static int gralloc_alloc_framebuffer(alloc_device_t* dev,
-        size_t size, int format, int usage, buffer_handle_t* pHandle)
-{
-    private_module_t* m = reinterpret_cast<private_module_t*>(
-            dev->common.module);
-    pthread_mutex_lock(&m->lock);
-    int err = gralloc_alloc_framebuffer_locked(dev, size, format, usage, pHandle);
-    pthread_mutex_unlock(&m->lock);
-    return err;
-}
 
 static int gralloc_alloc_buffer(alloc_device_t* dev,
         size_t size, int /*usage*/, buffer_handle_t* pHandle)
@@ -235,11 +168,7 @@ static int gralloc_alloc(alloc_device_t* dev,
     size_t size = align(height, tileHeight) * stride * bytesPerPixel + 4;
 
     int err;
-    if (usage & GRALLOC_USAGE_HW_FB) {
-        err = gralloc_alloc_framebuffer(dev, size, format, usage, pHandle);
-    } else {
-        err = gralloc_alloc_buffer(dev, size, usage, pHandle);
-    }
+    err = gralloc_alloc_buffer(dev, size, usage, pHandle);
 
     if (err < 0) {
         return err;
@@ -288,30 +217,28 @@ static int gralloc_close(struct hw_device_t *dev)
     return 0;
 }
 
-int gralloc_device_open(const hw_module_t* module, const char* name,
+int gralloc_device_open(const hw_module_t* module, const char* /*name*/,
         hw_device_t** device)
 {
     int status = -EINVAL;
-    if (!strcmp(name, GRALLOC_HARDWARE_GPU0)) {
-        gralloc_context_t *dev;
-        dev = (gralloc_context_t*)malloc(sizeof(*dev));
+    gralloc_context_t *dev;
 
-        /* initialize our state here */
-        memset(dev, 0, sizeof(*dev));
+    dev = (gralloc_context_t*)malloc(sizeof(*dev));
 
-        /* initialize the procs */
-        dev->device.common.tag = HARDWARE_DEVICE_TAG;
-        dev->device.common.version = 0;
-        dev->device.common.module = const_cast<hw_module_t*>(module);
-        dev->device.common.close = gralloc_close;
+    /* initialize our state here */
+    memset(dev, 0, sizeof(*dev));
 
-        dev->device.alloc   = gralloc_alloc;
-        dev->device.free    = gralloc_free;
+    /* initialize the procs */
+    dev->device.common.tag = HARDWARE_DEVICE_TAG;
+    dev->device.common.version = 0;
+    dev->device.common.module = const_cast<hw_module_t*>(module);
+    dev->device.common.close = gralloc_close;
 
-        *device = &dev->device.common;
-        status = 0;
-    } else {
-        status = fb_device_open(module, name, device);
-    }
+    dev->device.alloc   = gralloc_alloc;
+    dev->device.free    = gralloc_free;
+
+    *device = &dev->device.common;
+    status = 0;
+
     return status;
 }
