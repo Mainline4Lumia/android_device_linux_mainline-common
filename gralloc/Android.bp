@@ -1,0 +1,26 @@
+//
+// Copyright (C) 2008 The Android Open Source Project
+// Copyright (C) 2022 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "gralloc.default",
+    relative_install_path: "hw",
+    vendor: true,
+    srcs: [
+        "gralloc.cpp",
+        "framebuffer.cpp",
+        "mapper.cpp",
+    ],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libhardware",
+    ],
+    cppflags: [
+        "-DLOG_TAG=\"gralloc\"",
+        "-Wno-missing-field-initializers",
+    ],
+}
