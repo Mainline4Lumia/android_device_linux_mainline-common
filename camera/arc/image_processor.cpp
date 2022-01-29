@@ -16,7 +16,7 @@
 
 namespace arc {
 
-using android::CameraMetadata;
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 /*
  * Formats have different names in different header files. Here is the mapping

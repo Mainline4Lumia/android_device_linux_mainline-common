@@ -51,7 +51,7 @@ class StaticProperties {
   static StaticProperties* NewStaticProperties(
       std::unique_ptr<const MetadataReader> metadata_reader);
   static StaticProperties* NewStaticProperties(
-      std::unique_ptr<android::CameraMetadata> metadata) {
+      std::unique_ptr<android::hardware::camera::common::V1_0::helper::CameraMetadata> metadata) {
     return NewStaticProperties(
         std::make_unique<MetadataReader>(std::move(metadata)));
   }

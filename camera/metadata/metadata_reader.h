@@ -22,7 +22,7 @@
 #include <vector>
 
 #include <android-base/macros.h>
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include "types.h"
 
 namespace default_camera_hal {
@@ -30,7 +30,7 @@ namespace default_camera_hal {
 // A MetadataReader reads and converts/validates various metadata entries.
 class MetadataReader {
  public:
-  MetadataReader(std::unique_ptr<const android::CameraMetadata> metadata);
+  MetadataReader(std::unique_ptr<const android::hardware::camera::common::V1_0::helper::CameraMetadata> metadata);
   virtual ~MetadataReader();
 
   // Get a pointer to the underlying metadata being read.
@@ -65,7 +65,7 @@ class MetadataReader {
   virtual int ReprocessFormats(ReprocessFormatMap* reprocess_map) const;
 
  private:
-  std::unique_ptr<const android::CameraMetadata> metadata_;
+  std::unique_ptr<const android::hardware::camera::common::V1_0::helper::CameraMetadata> metadata_;
 
   DISALLOW_COPY_AND_ASSIGN(MetadataReader);
 };

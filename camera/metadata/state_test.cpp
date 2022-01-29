@@ -16,13 +16,15 @@
 
 #include "state.h"
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "metadata_common.h"
 #include "state_delegate_interface_mock.h"
 #include "test_common.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::AtMost;
 using testing::Expectation;
@@ -65,7 +67,7 @@ TEST_F(StateTest, Tags) {
 
 TEST_F(StateTest, PopulateStatic) {
   PrepareState();
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(state_->PopulateStaticFields(&metadata), 0);
   EXPECT_TRUE(metadata.isEmpty());
 }
@@ -77,7 +79,7 @@ TEST_F(StateTest, PopulateDynamic) {
 
   PrepareState();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(state_->PopulateDynamicFields(&metadata), 0);
   EXPECT_EQ(metadata.entryCount(), 1u);
   ExpectMetadataEq(metadata, tag_, expected);
@@ -89,27 +91,27 @@ TEST_F(StateTest, PopulateDynamicFail) {
 
   PrepareState();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(state_->PopulateDynamicFields(&metadata), err);
 }
 
 TEST_F(StateTest, PopulateTemplate) {
   int template_type = 3;
   PrepareState();
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(state_->PopulateTemplateRequest(template_type, &metadata), 0);
   EXPECT_TRUE(metadata.isEmpty());
 }
 
 TEST_F(StateTest, SupportsRequest) {
   PrepareState();
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_TRUE(state_->SupportsRequestValues(metadata));
 }
 
 TEST_F(StateTest, SetRequest) {
   PrepareState();
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(state_->SetRequestValues(metadata), 0);
 }
 

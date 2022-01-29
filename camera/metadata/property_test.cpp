@@ -19,12 +19,14 @@
 #include <array>
 #include <vector>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gtest/gtest.h>
 #include <hardware/camera3.h>
 #include "array_vector.h"
 #include "metadata_common.h"
 #include "test_common.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::Test;
 
@@ -57,7 +59,7 @@ TEST_F(PropertyTest, PopulateStaticSingleNumber) {
   Property<int32_t> property(int_tag_, data);
 
   // Populate static fields.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(property.PopulateStaticFields(&metadata), 0);
 
   // Check the results.
@@ -75,7 +77,7 @@ TEST_F(PropertyTest, PopulateStaticVector) {
   Property<std::vector<float>> property(float_tag_, data);
 
   // Populate static fields.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(property.PopulateStaticFields(&metadata), 0);
 
   // Check the results.
@@ -91,7 +93,7 @@ TEST_F(PropertyTest, PopulateStaticArray) {
   Property<std::array<float, 4>> property(float_tag_, data);
 
   // Populate static fields.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(property.PopulateStaticFields(&metadata), 0);
 
   // Check the results.
@@ -109,7 +111,7 @@ TEST_F(PropertyTest, PopulateStaticArrayVector) {
   Property<ArrayVector<uint8_t, 3>> property(byte_tag_, data);
 
   // Populate static fields.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(property.PopulateStaticFields(&metadata), 0);
 
   // Check the results.
@@ -122,7 +124,7 @@ TEST_F(PropertyTest, PopulateStaticArrayVector) {
 TEST_F(PropertyTest, PopulateDynamic) {
   Property<int32_t> property(int_tag_, 1);
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(property.PopulateDynamicFields(&metadata), 0);
 
   // Shouldn't have added anything.
@@ -133,7 +135,7 @@ TEST_F(PropertyTest, PopulateTemplate) {
   Property<int32_t> property(int_tag_, 1);
 
   for (int i = 1; i < CAMERA3_TEMPLATE_COUNT; ++i) {
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     EXPECT_EQ(property.PopulateTemplateRequest(i, &metadata), 0);
     // Shouldn't have added anything.
     EXPECT_TRUE(metadata.isEmpty());
@@ -142,13 +144,13 @@ TEST_F(PropertyTest, PopulateTemplate) {
 
 TEST_F(PropertyTest, SupportsRequest) {
   Property<int32_t> property(int_tag_, 1);
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(property.SupportsRequestValues(metadata), true);
 }
 
 TEST_F(PropertyTest, SetRequest) {
   Property<int32_t> property(int_tag_, 1);
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(property.SetRequestValues(metadata), 0);
 }
 

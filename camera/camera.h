@@ -19,7 +19,7 @@
 #ifndef DEFAULT_CAMERA_HAL_CAMERA_H_
 #define DEFAULT_CAMERA_HAL_CAMERA_H_
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <hardware/hardware.h>
 #include <hardware/camera3.h>
 #include <utils/Mutex.h>
@@ -63,9 +63,9 @@ class Camera {
         // Disconnect from the device: close dev nodes, etc.
         virtual void disconnect() = 0;
         // Initialize static camera characteristics for individual device
-        virtual int initStaticInfo(android::CameraMetadata* out) = 0;
+        virtual int initStaticInfo(android::hardware::camera::common::V1_0::helper::CameraMetadata* out) = 0;
         // Initialize a template of the given type
-        virtual int initTemplate(int type, android::CameraMetadata* out) = 0;
+        virtual int initTemplate(int type, android::hardware::camera::common::V1_0::helper::CameraMetadata* out) = 0;
         // Initialize device info: resource cost and conflicting devices
         // (/conflicting devices length)
         virtual void initDeviceInfo(struct camera_info *info) = 0;
@@ -79,7 +79,7 @@ class Camera {
             camera3_stream_configuration_t* stream_config) = 0;
         // Verify settings are valid for a capture or reprocessing
         virtual bool isValidRequestSettings(
-            const android::CameraMetadata& settings) = 0;
+            const android::hardware::camera::common::V1_0::helper::CameraMetadata& settings) = 0;
         // Enqueue a request to receive data from the camera
         virtual int enqueueRequest(
             std::shared_ptr<CaptureRequest> request) = 0;
@@ -135,7 +135,7 @@ class Camera {
         // be accessed without the camera device open
         android::Mutex mStaticInfoLock;
         // Standard camera settings templates
-        std::unique_ptr<const android::CameraMetadata> mTemplates[CAMERA3_TEMPLATE_COUNT];
+        std::unique_ptr<const android::hardware::camera::common::V1_0::helper::CameraMetadata> mTemplates[CAMERA3_TEMPLATE_COUNT];
         // Track in flight requests.
         std::unique_ptr<RequestTracker> mInFlightTracker;
         android::Mutex mInFlightTrackerLock;

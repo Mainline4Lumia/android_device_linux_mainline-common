@@ -16,7 +16,7 @@
 
 #include "partial_metadata_factory.h"
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -24,6 +24,8 @@
 #include "metadata_common.h"
 #include "test_common.h"
 #include "v4l2_wrapper_mock.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::AtMost;
 using testing::Expectation;
@@ -55,14 +57,14 @@ class PartialMetadataFactoryTest : public Test {
 
   virtual void ExpectControlOptions(const std::vector<uint8_t>& options) {
     // Options should be available.
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     ASSERT_EQ(control_->PopulateStaticFields(&metadata), 0);
     EXPECT_EQ(metadata.entryCount(), 1u);
     ExpectMetadataEq(metadata, options_tag_, options);
   }
 
   virtual void ExpectControlValue(uint8_t value) {
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     ASSERT_EQ(control_->PopulateDynamicFields(&metadata), 0);
     EXPECT_EQ(metadata.entryCount(), 1u);
     ExpectMetadataEq(metadata, delegate_tag_, value);
@@ -90,7 +92,7 @@ TEST_F(PartialMetadataFactoryTest, FixedState) {
   ASSERT_EQ(state->DynamicTags().size(), 1u);
   EXPECT_EQ(state->DynamicTags()[0], delegate_tag_);
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   ASSERT_EQ(state->PopulateDynamicFields(&metadata), 0);
   EXPECT_EQ(metadata.entryCount(), 1u);
   ExpectMetadataEq(metadata, delegate_tag_, value);
@@ -369,7 +371,7 @@ TEST_F(PartialMetadataFactoryTest, V4L2FactoryInteger) {
 
   // Should be fitting converted values to steps.
   uint8_t set_val = 10;
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(UpdateMetadata(&metadata, delegate_tag_, set_val), 0);
   EXPECT_CALL(*mock_converter_, MetadataToV4L2(set_val, _))
       .WillOnce(DoAll(SetArgPointee<1>(4), Return(0)));

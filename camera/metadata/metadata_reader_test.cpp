@@ -16,12 +16,14 @@
 
 #include "metadata_reader.h"
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gtest/gtest.h>
 #include <system/camera.h>
 
 #include "array_vector.h"
 #include "metadata_common.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::Test;
 
@@ -36,7 +38,7 @@ class MetadataReaderTest : public Test {
   }
 
   void ResetMetadata() {
-    metadata_ = std::make_unique<android::CameraMetadata>();
+    metadata_ = std::make_unique<CameraMetadata>();
   }
 
   void FillDUT() {
@@ -45,7 +47,7 @@ class MetadataReaderTest : public Test {
   }
 
   std::unique_ptr<MetadataReader> dut_;
-  std::unique_ptr<android::CameraMetadata> metadata_;
+  std::unique_ptr<CameraMetadata> metadata_;
 
   const int32_t facing_tag_ = ANDROID_LENS_FACING;
   const int32_t orientation_tag_ = ANDROID_SENSOR_ORIENTATION;

@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <fcntl.h>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <hardware/camera3.h>
 #include <linux/videodev2.h>
 #include <sys/stat.h>
@@ -34,6 +34,8 @@
 #include "v4l2_metadata_factory.h"
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(*(a)))
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 namespace v4l2_camera_hal {
 
@@ -115,7 +117,7 @@ int V4L2Camera::flushBuffers() {
   return device_->StreamOff();
 }
 
-int V4L2Camera::initStaticInfo(android::CameraMetadata* out) {
+int V4L2Camera::initStaticInfo(CameraMetadata* out) {
   HAL_LOG_ENTER();
 
   int res = metadata_->FillStaticMetadata(out);
@@ -141,7 +143,7 @@ int V4L2Camera::initStaticInfo(android::CameraMetadata* out) {
   return 0;
 }
 
-int V4L2Camera::initTemplate(int type, android::CameraMetadata* out) {
+int V4L2Camera::initTemplate(int type, CameraMetadata* out) {
   HAL_LOG_ENTER();
 
   return metadata_->GetRequestTemplate(type, out);
@@ -416,7 +418,7 @@ int V4L2Camera::setupStreams(camera3_stream_configuration_t* stream_config) {
 }
 
 bool V4L2Camera::isValidRequestSettings(
-    const android::CameraMetadata& settings) {
+    const CameraMetadata& settings) {
   if (!metadata_->IsValidRequest(settings)) {
     HAL_LOGE("Invalid request settings.");
     return false;

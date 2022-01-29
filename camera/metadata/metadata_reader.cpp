@@ -24,10 +24,12 @@
 
 #include "metadata_common.h"
 
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
+
 namespace default_camera_hal {
 
 MetadataReader::MetadataReader(
-    std::unique_ptr<const android::CameraMetadata> metadata)
+    std::unique_ptr<const CameraMetadata> metadata)
     : metadata_(std::move(metadata)) {}
 
 MetadataReader::~MetadataReader() {}

@@ -20,7 +20,7 @@
 #include <memory>
 #include <vector>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <hardware/camera3.h>
 
 namespace default_camera_hal {
@@ -29,7 +29,7 @@ namespace default_camera_hal {
 // with a constructor that makes a deep copy from the original struct.
 struct CaptureRequest {
   uint32_t frame_number;
-  android::CameraMetadata settings;
+  android::hardware::camera::common::V1_0::helper::CameraMetadata settings;
   std::unique_ptr<camera3_stream_buffer_t> input_buffer;
   std::vector<camera3_stream_buffer_t> output_buffers;
 

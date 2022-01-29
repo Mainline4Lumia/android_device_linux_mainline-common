@@ -20,11 +20,13 @@
 #include <set>
 #include <vector>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include "metadata_common.h"
 #include "partial_metadata_interface_mock.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::AtMost;
 using testing::Return;
@@ -41,8 +43,8 @@ class MetadataTest : public Test {
 
     component1_.reset(new PartialMetadataInterfaceMock());
     component2_.reset(new PartialMetadataInterfaceMock());
-    metadata_.reset(new android::CameraMetadata());
-    non_empty_metadata_.reset(new android::CameraMetadata());
+    metadata_.reset(new CameraMetadata());
+    non_empty_metadata_.reset(new CameraMetadata());
     uint8_t val = 1;
     non_empty_metadata_->update(ANDROID_COLOR_CORRECTION_MODE, &val, 1);
   }
@@ -72,8 +74,8 @@ class MetadataTest : public Test {
   std::unique_ptr<PartialMetadataInterfaceMock> component1_;
   std::unique_ptr<PartialMetadataInterfaceMock> component2_;
   // Metadata.
-  std::unique_ptr<android::CameraMetadata> metadata_;
-  std::unique_ptr<android::CameraMetadata> non_empty_metadata_;
+  std::unique_ptr<CameraMetadata> metadata_;
+  std::unique_ptr<CameraMetadata> non_empty_metadata_;
   // An empty vector to use as necessary.
   std::vector<int32_t> empty_tags_;
 };

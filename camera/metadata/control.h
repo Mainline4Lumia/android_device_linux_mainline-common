@@ -41,15 +41,15 @@ class Control : public PartialMetadataInterface {
   virtual std::vector<int32_t> DynamicTags() const override;
 
   virtual int PopulateStaticFields(
-      android::CameraMetadata* metadata) const override;
+      android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const override;
   virtual int PopulateDynamicFields(
-      android::CameraMetadata* metadata) const override;
+      android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const override;
   virtual int PopulateTemplateRequest(
-      int template_type, android::CameraMetadata* metadata) const override;
+      int template_type, android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const override;
   virtual bool SupportsRequestValues(
-      const android::CameraMetadata& metadata) const override;
+      const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata) const override;
   virtual int SetRequestValues(
-      const android::CameraMetadata& metadata) override;
+      const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata) override;
 
  private:
   std::unique_ptr<TaggedControlDelegate<T>> delegate_;
@@ -85,7 +85,7 @@ std::vector<int32_t> Control<T>::DynamicTags() const {
 }
 
 template <typename T>
-int Control<T>::PopulateStaticFields(android::CameraMetadata* metadata) const {
+int Control<T>::PopulateStaticFields(android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const {
   if (!options_) {
     HAL_LOGV("No options for control %d, nothing to populate.",
              delegate_->tag());
@@ -103,7 +103,7 @@ int Control<T>::PopulateStaticFields(android::CameraMetadata* metadata) const {
 }
 
 template <typename T>
-int Control<T>::PopulateDynamicFields(android::CameraMetadata* metadata) const {
+int Control<T>::PopulateDynamicFields(android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const {
   // Populate the current setting.
   T value;
   int res = delegate_->GetValue(&value);
@@ -115,7 +115,7 @@ int Control<T>::PopulateDynamicFields(android::CameraMetadata* metadata) const {
 
 template <typename T>
 int Control<T>::PopulateTemplateRequest(
-    int template_type, android::CameraMetadata* metadata) const {
+    int template_type, android::hardware::camera::common::V1_0::helper::CameraMetadata* metadata) const {
   // Populate with a default.
   T value;
   int res;
@@ -135,7 +135,7 @@ int Control<T>::PopulateTemplateRequest(
 
 template <typename T>
 bool Control<T>::SupportsRequestValues(
-    const android::CameraMetadata& metadata) const {
+    const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata) const {
   if (metadata.isEmpty()) {
     // Implicitly supported.
     return true;
@@ -163,7 +163,7 @@ bool Control<T>::SupportsRequestValues(
 }
 
 template <typename T>
-int Control<T>::SetRequestValues(const android::CameraMetadata& metadata) {
+int Control<T>::SetRequestValues(const android::hardware::camera::common::V1_0::helper::CameraMetadata& metadata) {
   if (metadata.isEmpty()) {
     // No changes necessary.
     return 0;

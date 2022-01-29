@@ -16,7 +16,7 @@
 
 #include "control.h"
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -24,6 +24,8 @@
 #include "control_options_interface_mock.h"
 #include "metadata_common.h"
 #include "test_common.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 using testing::AtMost;
 using testing::Expectation;
@@ -78,7 +80,7 @@ class ControlTest : public Test {
 
   virtual void ExpectOptions(const std::vector<uint8_t>& options) {
     // Options should be available.
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     ASSERT_EQ(control_->PopulateStaticFields(&metadata), 0);
     if (use_options_ && report_options_) {
       EXPECT_EQ(metadata.entryCount(), 1u);
@@ -91,7 +93,7 @@ class ControlTest : public Test {
   }
 
   virtual void ExpectValue(uint8_t value) {
-    android::CameraMetadata metadata;
+    CameraMetadata metadata;
     ASSERT_EQ(control_->PopulateDynamicFields(&metadata), 0);
     EXPECT_EQ(metadata.entryCount(), 1u);
     ExpectMetadataEq(metadata, delegate_tag_, value);
@@ -179,7 +181,7 @@ TEST_F(ControlTest, PopulateDynamicFail) {
   EXPECT_CALL(*mock_delegate_, GetValue(_)).WillOnce(Return(err));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateDynamicFields(&metadata), err);
 
   // Should not have added an entry.
@@ -193,7 +195,7 @@ TEST_F(ControlTest, PopulateTemplate) {
       .WillOnce(DoAll(SetArgPointee<1>(default_value), Return(0)));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateTemplateRequest(template_type, &metadata), 0);
   ExpectMetadataEq(metadata, delegate_tag_, default_value);
 }
@@ -205,7 +207,7 @@ TEST_F(ControlTest, PopulateTemplateFail) {
       .WillOnce(Return(err));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateTemplateRequest(template_type, &metadata), err);
 }
 
@@ -218,7 +220,7 @@ TEST_F(ControlTest, PopulateTemplateOptionless) {
       .WillOnce(DoAll(SetArgPointee<0>(value), Return(0)));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateTemplateRequest(template_type, &metadata), 0);
   ExpectMetadataEq(metadata, delegate_tag_, value);
 }
@@ -231,7 +233,7 @@ TEST_F(ControlTest, PopulateTemplateOptionlessFail) {
   EXPECT_CALL(*mock_delegate_, GetValue(_)).WillOnce(Return(err));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateTemplateRequest(template_type, &metadata), err);
 }
 
@@ -244,7 +246,7 @@ TEST_F(ControlTest, PopulateTemplateUnreportedOptions) {
       .WillOnce(DoAll(SetArgPointee<1>(default_value), Return(0)));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateTemplateRequest(template_type, &metadata), 0);
   ExpectMetadataEq(metadata, delegate_tag_, default_value);
 }
@@ -258,12 +260,12 @@ TEST_F(ControlTest, PopulateTemplateUnreportedOptionsFail) {
       .WillOnce(Return(err));
   PrepareControl();
 
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   EXPECT_EQ(control_->PopulateTemplateRequest(template_type, &metadata), err);
 }
 
 TEST_F(ControlTest, SupportsRequest) {
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -275,7 +277,7 @@ TEST_F(ControlTest, SupportsRequest) {
 
 TEST_F(ControlTest, SupportsRequestNoOptions) {
   use_options_ = false;
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
   PrepareControl();
@@ -285,7 +287,7 @@ TEST_F(ControlTest, SupportsRequestNoOptions) {
 
 TEST_F(ControlTest, SupportsRequestUnreportedOptions) {
   report_options_ = false;
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -296,7 +298,7 @@ TEST_F(ControlTest, SupportsRequestUnreportedOptions) {
 }
 
 TEST_F(ControlTest, SupportsRequestFail) {
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -308,7 +310,7 @@ TEST_F(ControlTest, SupportsRequestFail) {
 
 TEST_F(ControlTest, SupportsRequestUnreportedOptionsFail) {
   report_options_ = false;
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -321,7 +323,7 @@ TEST_F(ControlTest, SupportsRequestUnreportedOptionsFail) {
 
 TEST_F(ControlTest, SupportsRequestInvalidNumber) {
   // Start with a request for multiple values.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   std::vector<uint8_t> test_data = {1, 2, 3};
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_data), 0);
   PrepareControl();
@@ -331,7 +333,7 @@ TEST_F(ControlTest, SupportsRequestInvalidNumber) {
 TEST_F(ControlTest, SupportsRequestInvalidNumberNoOptions) {
   use_options_ = false;
   // Start with a request for multiple values.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   std::vector<uint8_t> test_data = {1, 2, 3};
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_data), 0);
   PrepareControl();
@@ -341,13 +343,13 @@ TEST_F(ControlTest, SupportsRequestInvalidNumberNoOptions) {
 }
 
 TEST_F(ControlTest, SupportsRequestEmpty) {
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   PrepareControl();
   EXPECT_EQ(control_->SupportsRequestValues(metadata), true);
 }
 
 TEST_F(ControlTest, SetRequest) {
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -365,7 +367,7 @@ TEST_F(ControlTest, SetRequest) {
 
 TEST_F(ControlTest, SetRequestNoOptions) {
   use_options_ = false;
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -379,7 +381,7 @@ TEST_F(ControlTest, SetRequestNoOptions) {
 
 TEST_F(ControlTest, SetRequestUnreportedOptions) {
   report_options_ = false;
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -397,7 +399,7 @@ TEST_F(ControlTest, SetRequestUnreportedOptions) {
 }
 
 TEST_F(ControlTest, SetRequestSettingFail) {
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -414,7 +416,7 @@ TEST_F(ControlTest, SetRequestSettingFail) {
 }
 
 TEST_F(ControlTest, SetRequestValidationFail) {
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   uint8_t test_option = 123;
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_option), 0);
 
@@ -426,7 +428,7 @@ TEST_F(ControlTest, SetRequestValidationFail) {
 
 TEST_F(ControlTest, SetRequestInvalidNumber) {
   // Start with a request for multiple values.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   std::vector<uint8_t> test_data = {1, 2, 3};
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_data), 0);
 
@@ -437,7 +439,7 @@ TEST_F(ControlTest, SetRequestInvalidNumber) {
 TEST_F(ControlTest, SetRequestInvalidNumberNoOptions) {
   use_options_ = false;
   // Start with a request for multiple values.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   std::vector<uint8_t> test_data = {1, 2, 3};
   ASSERT_EQ(UpdateMetadata(&metadata, delegate_tag_, test_data), 0);
 
@@ -449,7 +451,7 @@ TEST_F(ControlTest, SetRequestInvalidNumberNoOptions) {
 
 TEST_F(ControlTest, SetRequestEmpty) {
   // Should do nothing.
-  android::CameraMetadata metadata;
+  CameraMetadata metadata;
   PrepareControl();
   EXPECT_EQ(control_->SetRequestValues(metadata), 0);
 }

@@ -24,13 +24,15 @@
 #include <queue>
 #include <string>
 
-#include <camera/CameraMetadata.h>
+#include <CameraMetadata.h>
 #include <utils/StrongPointer.h>
 #include <utils/Thread.h>
 #include "camera.h"
 #include "common.h"
 #include "metadata/metadata.h"
 #include "v4l2_wrapper.h"
+
+using android::hardware::camera::common::V1_0::helper::CameraMetadata;
 
 namespace v4l2_camera_hal {
 // V4L2Camera is a specific V4L2-supported camera device. The Camera object
@@ -57,9 +59,9 @@ class V4L2Camera : public default_camera_hal::Camera {
   // Disconnect from the device: close dev nodes, etc.
   void disconnect() override;
   // Initialize static camera characteristics for individual device.
-  int initStaticInfo(android::CameraMetadata* out) override;
+  int initStaticInfo(CameraMetadata* out) override;
   // Initialize a template of the given type.
-  int initTemplate(int type, android::CameraMetadata* out) override;
+  int initTemplate(int type, CameraMetadata* out) override;
   // Initialize device info: resource cost and conflicting devices
   // (/conflicting devices length).
   void initDeviceInfo(camera_info_t* info) override;
@@ -71,7 +73,7 @@ class V4L2Camera : public default_camera_hal::Camera {
   // Set up the streams, including seting usage & max_buffers
   int setupStreams(camera3_stream_configuration_t* stream_config) override;
   // Verify settings are valid for a capture or reprocessing.
-  bool isValidRequestSettings(const android::CameraMetadata& settings) override;
+  bool isValidRequestSettings(const CameraMetadata& settings) override;
   // Enqueue a request to receive data from the camera.
   int enqueueRequest(
       std::shared_ptr<default_camera_hal::CaptureRequest> request) override;
