@@ -145,3 +145,7 @@ ifeq ($(TARGET_DISPLAY_ENABLE_MESA),true)
 PRODUCT_SOONG_NAMESPACES += \
     external/mesa3d
 endif
+
+# Thermal
+PRODUCT_PACKAGES += \
+    com.android.hardware.thermal
