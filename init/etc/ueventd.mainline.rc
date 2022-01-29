@@ -1,0 +1,11 @@
+#
+# Copyright (C) 2023 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Backlights
+/sys/class/backlight/*              brightness 0660 system system
+
+# Input devices
+/dev/input/*                        0660 system input

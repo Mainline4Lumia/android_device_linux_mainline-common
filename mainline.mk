@@ -112,6 +112,13 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.example \
     android.hardware.health-service.example_recovery
 
+# Init
+PRODUCT_PACKAGES += \
+    init.mainline.rc \
+    init.mainline.usb.rc \
+    init.recovery.mainline.usb.rc \
+    ueventd.mainline.rc
+
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.lights-service.example

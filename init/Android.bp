@@ -1,0 +1,26 @@
+//
+// Copyright (C) 2023 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+prebuilt_etc {
+    name: "init.mainline.rc",
+    src: "etc/init.mainline.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.mainline.usb.rc",
+    src: "etc/init.mainline.usb.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "ueventd.mainline.rc",
+    filename: "ueventd.rc",
+    src: "etc/ueventd.mainline.rc",
+    vendor: true,
+}

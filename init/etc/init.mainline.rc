@@ -1,0 +1,8 @@
+#
+# Copyright (C) 2023 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+import /vendor/etc/init/hw/init.device.rc
+import /vendor/etc/init/hw/init.mainline.usb.rc
