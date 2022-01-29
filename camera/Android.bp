@@ -8,6 +8,7 @@
 cc_library_shared {
     name: "camera.v4l2",
     relative_install_path: "hw",
+    vendor: true,
     srcs: [
         "arc/cached_frame.cpp",
         "arc/exif_utils.cpp",
