@@ -141,6 +141,13 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.example \
     android.hardware.health-service.example_recovery
 
+# Init
+PRODUCT_PACKAGES += \
+    init.mainline.rc \
+    init.mainline.usb.rc \
+    init.recovery.mainline.usb.rc \
+    ueventd.mainline.rc
+
 # Input
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
