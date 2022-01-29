@@ -123,6 +123,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.power-service.example
 
+# Rootdir
+PRODUCT_PACKAGES += \
+    init.mainline.rc \
+    init.mainline.usb.rc \
+    init.recovery.mainline.rc \
+    init.recovery.mainline.usb.rc \
+    ueventd.mainline.rc
+
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@2.1-service.mock
