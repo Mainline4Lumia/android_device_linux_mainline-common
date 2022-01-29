@@ -111,6 +111,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.power-service.example
 
+# Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@2.1-service.mock
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
