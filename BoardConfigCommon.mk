@@ -6,6 +6,9 @@
 
 COMMON_PATH := device/linux/mainline-common
 
+# APEX
+OVERRIDE_TARGET_FLATTEN_APEX := true
+
 # Bootloader
 TARGET_NO_BOOTLOADER := true
 
