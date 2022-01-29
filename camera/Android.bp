@@ -1,0 +1,54 @@
+//
+// Copyright (C) 2016 The Android Open Source Project
+// Copyright (C) 2023 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "camera.v4l2",
+    relative_install_path: "hw",
+    srcs: [
+        "arc/cached_frame.cpp",
+        "arc/exif_utils.cpp",
+        "arc/frame_buffer.cpp",
+        "arc/image_processor.cpp",
+        "arc/jpeg_compressor.cpp",
+        "camera.cpp",
+        "capture_request.cpp",
+        "format_metadata_factory.cpp",
+        "metadata/boottime_state_delegate.cpp",
+        "metadata/enum_converter.cpp",
+        "metadata/metadata.cpp",
+        "metadata/metadata_reader.cpp",
+        "request_tracker.cpp",
+        "static_properties.cpp",
+        "stream_format.cpp",
+        "v4l2_camera.cpp",
+        "v4l2_camera_hal.cpp",
+        "v4l2_metadata_factory.cpp",
+        "v4l2_wrapper.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libchrome",
+        "libcamera_client",
+        "libcamera_metadata",
+        "libcutils",
+        "libexif",
+        "libhardware",
+        "libjpeg",
+        "liblog",
+        "libsync",
+        "libutils",
+        "libyuv",
+    ],
+    cppflags: [
+        "-fno-short-enums",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fvisibility=hidden",
+        "-DHAVE_JPEG",
+    ],
+}
