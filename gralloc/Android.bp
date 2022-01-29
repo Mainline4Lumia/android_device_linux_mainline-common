@@ -6,7 +6,7 @@
 //
 
 cc_library_shared {
-    name: "gralloc.default",
+    name: "gralloc.ashmem",
     relative_install_path: "hw",
     vendor: true,
     srcs: [
