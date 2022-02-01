@@ -4,6 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# ADB
+persist.adb.nonblocking_ffs=0
+ro.adb.nonblocking_ffs=0
+
 # Camera
 ro.hardware.camera=v4l2
 
