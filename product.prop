@@ -1,0 +1,12 @@
+#
+# Copyright (C) 2023 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# ADB on boot
+ro.adb.secure=0
+ro.secure=0
+ro.debuggable=1
+persist.service.debuggable=1
+persist.service.adb.enable=1
