@@ -6,6 +6,6 @@ service vendor.log_to_cache /system/bin/logcat -f /cache/logs/log.txt
     group system log
     disabled
 
-on post-fs
-    mkdir /cache/logs 0775 system log
-    start vendor.log_to_cache
+#on post-fs
+#    mkdir /cache/logs 0775 system log
+#    start vendor.log_to_cache
