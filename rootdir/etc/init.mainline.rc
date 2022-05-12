@@ -1,6 +1,11 @@
 import /vendor/etc/init/hw/init.device.rc
 import /vendor/etc/init/hw/init.mainline.usb.rc
 
+service vendor.log_to_kmsg /system/bin/logcat -f /dev/kmsg
+    user system
+    group system log
+    disabled
+
 service vendor.log_to_cache /system/bin/logcat -f /cache/logs/log.txt
     user system
     group system log
@@ -11,6 +16,8 @@ on post-fs
     start vendor.log_to_cache
 
 on early-boot
+    start vendor.log_to_kmsg
+
     mount debugfs debugfs /sys/kernel/debug
     chmod 755 /sys/kernel/debug
     chmod 755 /sys/kernel/debug/sync
