@@ -22,3 +22,7 @@ ro.opengles.version=196609
 ro.vendor.v4l2_codec2.decode_concurrent_instances=8
 ro.vendor.v4l2_codec2.encode_concurrent_instances=8
 debug.stagefright.c2-poolmask=0xf50000
+
+# Wi-Fi
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15
