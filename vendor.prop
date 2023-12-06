@@ -17,3 +17,7 @@ debug.sf.no_hw_vsync=1
 ro.hardware.egl?=angle
 ro.hardware.vulkan=pastel
 ro.opengles.version=196609
+
+# Wi-Fi
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15

@@ -157,3 +157,11 @@ PRODUCT_PACKAGES += \
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator-service.example
+
+# Wi-Fi
+PRODUCT_PACKAGES += \
+    android.hardware.wifi-service \
+    hostapd \
+    libwpa_client \
+    wpa_supplicant \
+    wpa_supplicant.conf
