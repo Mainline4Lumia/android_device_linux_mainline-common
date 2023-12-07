@@ -113,8 +113,8 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.example \
-    android.hardware.health-service.example_recovery
+    com.google.cf.health \
+    android.hardware.health-service.cuttlefish_recovery
 
 # Init
 PRODUCT_PACKAGES += \
