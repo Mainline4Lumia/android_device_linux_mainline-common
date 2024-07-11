@@ -32,7 +32,6 @@ cc_library_shared {
     ],
     shared_libs: [
         "libbase",
-        "libchrome",
         "libcamera_metadata",
         "libcutils",
         "libexif",
