@@ -130,6 +130,10 @@ PRODUCT_PACKAGES += \
     com.android.hardware.security.authgraph \
     com.android.hardware.security.secretkeeper
 
+# Sensors
+PRODUCT_PACKAGES += \
+    com.android.hardware.sensors
+
 # Shipping API level
 PRODUCT_SHIPPING_API_LEVEL := 34
 
