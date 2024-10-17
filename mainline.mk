@@ -112,6 +112,10 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.example \
     android.hardware.health-service.example_recovery
 
+# Lights
+PRODUCT_PACKAGES += \
+    android.hardware.lights-service.example
+
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
