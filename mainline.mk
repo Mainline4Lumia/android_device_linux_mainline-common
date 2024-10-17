@@ -136,6 +136,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml
 
+# Health
+PRODUCT_PACKAGES += \
+    android.hardware.health-service.example \
+    android.hardware.health-service.example_recovery
+
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
