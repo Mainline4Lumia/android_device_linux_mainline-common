@@ -167,6 +167,11 @@ PRODUCT_COPY_FILES += \
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power-service.example \
+    android.hardware.power.stats-service.example
+
 # Shipping API level
 PRODUCT_SHIPPING_API_LEVEL := 34
 
