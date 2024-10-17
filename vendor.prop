@@ -7,6 +7,9 @@
 # Camera
 ro.hardware.camera=v4l2
 
+# DRM
+drm.service.enabled=true
+
 # Graphics
 debug.hwui.renderer=skiagl
 debug.sf.disable_hwc_overlays=1

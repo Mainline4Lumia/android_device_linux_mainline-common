@@ -103,6 +103,10 @@ PRODUCT_PACKAGES += \
     libGLES_mesa
 endif
 
+# DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm-service.clearkey
+
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
