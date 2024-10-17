@@ -124,6 +124,12 @@ PRODUCT_PACKAGES += \
     android.hardware.power-service.example \
     android.hardware.power.stats-service.example
 
+# Security
+PRODUCT_PACKAGES += \
+    android.hardware.security.keymint-service \
+    com.android.hardware.security.authgraph \
+    com.android.hardware.security.secretkeeper
+
 # Shipping API level
 PRODUCT_SHIPPING_API_LEVEL := 34
 
