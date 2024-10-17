@@ -107,6 +107,11 @@ endif
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey
 
+# Health
+PRODUCT_PACKAGES += \
+    android.hardware.health-service.example \
+    android.hardware.health-service.example_recovery
+
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
