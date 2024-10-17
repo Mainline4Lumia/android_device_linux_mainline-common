@@ -9,12 +9,21 @@ COMMON_PATH := device/linux/mainline-common
 # Bootloader
 TARGET_NO_BOOTLOADER := true
 
+# Graphics
+TARGET_USES_VULKAN := true
+
 # Platform
 TARGET_BOARD_PLATFORM := mainline
 BOARD_USES_MAINLINE_HARDWARE := true
 
 # Properties
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
+ifeq ($(TARGET_DISPLAY_ENABLE_DRM),true)
+TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor_drm.prop
+endif
+ifeq ($(TARGET_DISPLAY_ENABLE_MESA),true)
+TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor_mesa.prop
+endif
 
 # Recovery
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -22,3 +31,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # VINTF
 DEVICE_MANIFEST_FILE += $(COMMON_PATH)/manifest.xml
+ifeq ($(TARGET_DISPLAY_ENABLE_DRM),true)
+DEVICE_MANIFEST_FILE += $(COMMON_PATH)/manifest_drm.xml
+else
+DEVICE_MANIFEST_FILE += $(COMMON_PATH)/manifest_fb.xml
+endif
