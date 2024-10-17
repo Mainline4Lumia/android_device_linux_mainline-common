@@ -7,5 +7,10 @@
 # Backlights
 /sys/class/backlight/*              brightness 0660 system system
 
+# Graphics
+/dev/dri/card0                      0660 system graphics
+/dev/dri/controlD64                 0660 system graphics
+/dev/dri/renderD128                 0666 system graphics
+
 # Input devices
 /dev/input/*                        0660 system input
