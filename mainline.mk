@@ -149,6 +149,17 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.lights-service.example
 
+# Media
+PRODUCT_PACKAGES += \
+    android.hardware.media.c2@1.2-service-v4l2
+
+PRODUCT_PACKAGES += \
+    codec2.vendor.ext.policy
+
+# Media configs
+PRODUCT_PACKAGES += \
+    media_codecs_c2.xml
+
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
@@ -157,7 +168,8 @@ PRODUCT_SHIPPING_API_LEVEL := 34
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+    $(LOCAL_PATH) \
+    external/v4l2_codec2
 
 ifeq ($(TARGET_DISPLAY_ENABLE_MESA),true)
 PRODUCT_SOONG_NAMESPACES += \
